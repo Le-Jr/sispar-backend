@@ -71,8 +71,8 @@ def login():
     
     employee = employee.to_dict()
     
-    if employee.get('email') == email and check_password(password, employee.get('senha')):
-        return jsonify({"message":  "Login realizado co sucesso"}), 200
+    if employee.get('email') == email and check_password(password, employee.get('password')):
+        return jsonify({"message":  "Login realizado com sucesso"}), 200
 
 
 

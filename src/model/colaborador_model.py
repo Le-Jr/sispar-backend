@@ -32,7 +32,7 @@ class Employee(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "password": self.password,
+            "email": self.email,
             "job": self.job,
             "salary": self.salary
         }
