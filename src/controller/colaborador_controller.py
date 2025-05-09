@@ -4,7 +4,11 @@ from src.model import db
 
 bp_employee = Blueprint('colaborador', __name__, url_prefix='/colaborador')
 
-data = db.session.get()
+data = [
+    {'id': 1, 'nome': 'Samuel Silvério', 'cargo': 'Desenvolvedor Back-end', 'cracha': 'BE12310'},
+    {'id': 2, 'nome': 'Karynne Moreira', 'cargo': 'Desenvolvedora Front-end', 'cracha': 'FE21310'},
+    {'id': 3, 'nome': 'Joy Assis', 'cargo': 'Desenvolvedora Fullstack', 'cracha': 'FS12110'},
+]
 
 @bp_employee.route('todos-colaboradores')
 def get_data():
@@ -12,8 +16,9 @@ def get_data():
         db.select(Employee)
     ).scalars().all()
     
+    employees = [employee.all_data() for employee in employees]
     
-    return jsonify(data)
+    return jsonify(employees), 200
 
 
 @bp_employee.route('/criar', methods=["POST"])

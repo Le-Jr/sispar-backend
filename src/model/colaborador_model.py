@@ -18,4 +18,13 @@ class Employee(db.Model):
         self.password = password
         self.job = job
         self.salary = salary
-    
+
+
+    def all_data(self) -> dict:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "job": self.job,
+            "salary": self.salary
+        }
+
