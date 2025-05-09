@@ -1,15 +1,17 @@
 from flask import Blueprint, jsonify, request
+from src.model.colaborador_model import Employee
+from src.model import db
 
 bp_employee = Blueprint('colaborador', __name__, url_prefix='/colaborador')
 
-data = [
-    {'id': 1, 'name': 'Samuel Silvério', 'job': 'Desenvolvedor Back-end', 'badge': 'BE12310'},
-    {'id': 2, 'name': 'Karynne Moreira', 'job': 'Desenvolvedora Front-end', 'badge': 'FE21310'},
-    {'id': 3, 'name': 'Joy Assis', 'job': 'Desenvolvedora Fullstack', 'badge': 'FS12110'},
-]
+data = db.session.get()
 
-@bp_employee.route('/pegar-dados')
+@bp_employee.route('todos-colaboradores')
 def get_data():
+    employees = db.session.execute(
+        db.select(Employee)
+    ).scalars().all()
+    
     
     return jsonify(data)
 
@@ -17,6 +19,17 @@ def get_data():
 @bp_employee.route('/criar', methods=["POST"])
 def create_employee():
     requisition_data = request.get_json()
+
+    new_employee = Employee(
+        name=requisition_data['name'],
+        email=requisition_data['email'],
+        password=requisition_data['password'],
+        job=requisition_data['job'],
+        salary=requisition_data['salary']
+    )
+
+    db.session.add(new_employee)
+    db.session.commit()
 
     if not requisition_data:
         return jsonify({"Erro": "Insira todos os dados"}), 400
@@ -26,15 +39,9 @@ def create_employee():
         if employee['badge'] == requisition_data.get('badge'):
             return jsonify({"Erro": "Crachá já existe"}), 400
 
-    new_employee = {
-        'id': len(data) + 1,
-        'name': requisition_data['name'],
-        'job': requisition_data['job'],
-        'badge': requisition_data['badge'],
-    }
 
     data.append(new_employee)
-    return jsonify({"message": "employee criado com sucesso"}), 201
+    return jsonify({"message": "colaborador criado com sucesso"}), 201
 
 
 
