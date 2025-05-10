@@ -12,17 +12,13 @@ def create_app(config_name=None):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     
-    # Inicializa o método init_app, se existir na configuração
     if hasattr(config[config_name], 'init_app'):
         config[config_name].init_app(app)
     
     db.init_app(app)
     
     with app.app_context():
-        # Em produção, é melhor usar migrações em vez de create_all
-        # Mas para desenvolvimento e testes, create_all é conveniente
-        if config_name != 'production':
-            db.create_all()
+        db.create_all()
     
     app.register_blueprint(bp_employee)
     app.register_blueprint(bp_refund)
