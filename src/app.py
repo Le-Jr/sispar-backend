@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from src.controller.colaborador_controller import bp_employee
+from src.controller.reembolso_controller import bp_refund
 from src.model import db
 from config import Config
 
@@ -14,4 +15,5 @@ def create_app():
         db.create_all()
     
     app.register_blueprint(bp_employee)
+    app.register_blueprint(bp_refund)
     return app

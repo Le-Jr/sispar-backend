@@ -6,11 +6,7 @@ from src.model import db
 
 bp_employee = Blueprint('colaborador', __name__, url_prefix='/colaborador')
 
-data = [
-    {'id': 1, 'name': 'Samuel Silvério', 'job': 'Desenvolvedor Back-end', 'badge': 'BE12310'},
-    {'id': 2, 'name': 'Karynne Moreira', 'job': 'Desenvolvedora Front-end', 'badge': 'FE21310'},
-    {'id': 3, 'name': 'Joy Assis', 'job': 'Desenvolvedora Fullstack', 'badge': 'FS12110'},
-]
+data = "" 
 
 @bp_employee.route('todos-colaboradores', methods = ["GET"])
 def get_data():
