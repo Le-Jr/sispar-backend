@@ -136,8 +136,6 @@ O backend fornece os seguintes endpoints:
 
   - Retorno: Lista de reembolsos filtrados por prestação.
 
----
-
 ### Observações 🔍
 
 Relacionamento entre as tabelas:
@@ -145,6 +143,8 @@ Relacionamento entre as tabelas:
 O campo **id_employee** na tabela Refund é uma chave estrangeira que referencia o id da tabela **Employee**.
 
 Isso permite vincular **cada reembolso a um colaborador** específico.
+
+---
 
 ### Swagger 📚
 
