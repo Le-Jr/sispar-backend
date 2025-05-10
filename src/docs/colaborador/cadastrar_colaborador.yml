@@ -1,0 +1,37 @@
+tags:
+  - Colaborador
+description: Endpoint para cadastrar um novo colaborador
+
+parameters:
+  - in: body
+    name: corpo # Referencia ao body da requisicao
+    required: true
+    schema:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Linus Torvalds
+        email:
+          type: string
+          example: linus@linux.com
+        password:
+          type: string
+          example: senha12345
+        job:
+          type: string
+          example: Dev Front-end
+        salary:
+          type: number
+          example: 2500.78
+      required:
+        - name
+        - email
+        - password
+        - job
+        - salary
+responses:
+  201:
+    description: colaborador criado com sucesso
+  400:
+    description: Insira todos os dados

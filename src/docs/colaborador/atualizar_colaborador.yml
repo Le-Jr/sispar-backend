@@ -1,0 +1,41 @@
+tags:
+  - Colaborador
+description: Endpoint para atualizar os dados de um colaborador existente
+
+parameters:
+  - name: id
+    in: path
+    type: integer
+    required: true
+    description: ID do colaborador a ser atualizado
+  - in: body
+    name: corpo
+    required: true
+    schema:
+      type: object
+      properties:
+        name:
+          type: string
+          example: João da Silva
+        email:
+          type: string
+          example: joao@email.com
+        password:
+          type: string
+          example: novaSenhaSegura123
+        job:
+          type: string
+          example: Analista de Dados
+        salary:
+          type: number
+          example: 4500.00
+        badge:
+          type: string
+          example: 12345
+responses:
+  200:
+    description: Dados do colaborador atualizados com sucesso
+  400:
+    description: Erro de validação ou crachá já existente
+  404:
+    description: Usuário não encontrado

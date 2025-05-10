@@ -1,0 +1,40 @@
+tags:
+  - Colaborador
+summary: Lista todos os colaboradores
+description: Endpoint para retornar a lista de colaboradores cadastrados.
+
+responses:
+  200:
+    description: Lista de colaboradores retornada com sucesso.
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: Linus Torvalds
+              email:
+                type: string
+                example: linus@linux.com
+              job:
+                type: string
+                example: Dev Front-end
+              salary:
+                type: number
+                example: 2500.78
+  404:
+    description: Sem colaboradores na lista.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Sem colaboradores na lista
