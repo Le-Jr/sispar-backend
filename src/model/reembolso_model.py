@@ -48,7 +48,7 @@ class Refund(db.Model):
         self.status = status
     
     
-    def all_data(self) -> dict:
+    def to_dict(self) -> dict:
         return {
             "employee": self.employee,
             "company": self.company,

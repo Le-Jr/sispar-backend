@@ -42,3 +42,18 @@ def refund():
     
     
     return jsonify({"message": "Solicitação reembolso feita com sucesso"}),201
+
+@bp_refund.route("ver-reembolso/<int:installment_num>", methods = ["GET"])
+def refund_view(installment_num):
+    
+    
+    refund = db.session.execute(
+        db.select(Refund).where(Refund.installment_num == installment_num)  
+    ).scalar()
+  
+    if not refund:
+        return jsonify({"message": "Reembolso não encontrado"}), 404
+  
+    
+    return jsonify(refund.to_dict()), 200
+    
