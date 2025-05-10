@@ -44,7 +44,7 @@ def create_employee():
     #         return jsonify({"Erro": "Crachá já existe"}), 400
 
 
-    data.append(new_employee)
+    # data.append(new_employee)
     return jsonify({"message": "colaborador criado com sucesso"}), 201
 
 

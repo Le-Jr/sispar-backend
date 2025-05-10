@@ -19,7 +19,7 @@ def refund():
         company = requisition_data.get("company"),
         installment_num = requisition_data.get("installment_num"),
         description = requisition_data.get("description"),
-        date = requisition_data.get("date"),
+        date_request = requisition_data.get("date_request"),
         refund_type = requisition_data.get("refund_type"),
         cost_center = requisition_data.get("cost_center"),
         intern_order = requisition_data.get("intern_order"),
