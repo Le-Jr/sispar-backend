@@ -75,7 +75,7 @@ API/
 3. **Configurar o banco de dados (MySQL):** Certifique-se de que o banco de dados MySQL esteja configurado corretamente e acessível. As credenciais do banco de dados podem ser configuradas no arquivo .env(exemplo abaixo)
 
    ```bash
-   DATABASE_URL="mysql://USER:PASSWORD@localhost:3306/mydb"
+   URL_DATABASE_DEV="mysql://USER:PASSWORD@localhost:3306/mydb"
    ```
 
 4. **Rodar a aplicação**: Para rodar o backend no ambiente de desenvolvimento, use o seguinte comando:
