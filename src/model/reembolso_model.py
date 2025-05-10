@@ -2,6 +2,7 @@ from sqlalchemy import Date, ForeignKey, func, text
 from src.model import db
 from sqlalchemy.schema import Column
 from sqlalchemy.types import String, DECIMAL, Integer
+from datetime import date
 
 class Refund(db.Model):
     __tablename__ = 'refund'
@@ -11,7 +12,7 @@ class Refund(db.Model):
     company = Column(String(50), nullable=False)
     installment_num = Column(Integer, nullable=False)
     description = Column(String(255))
-    date = Column(Date, nullable=False, server_default=text('CURRENT_DATE()'))
+    date_request = Column(Date, nullable=False, default=date.today)
     refund_type = Column(String(30), nullable=False)
     cost_center = Column(String(100), nullable=False)
     intern_order = Column(String(25))
@@ -27,13 +28,13 @@ class Refund(db.Model):
 
 
     
-    def __init__(self, employee, company, installment_num, description, date, refund_type, cost_center, intern_order, division, pep, currency, km_distance,km_value, incoming_value, expenses, id_employee, status):
+    def __init__(self, employee, company, installment_num, description, date_request, refund_type, cost_center, intern_order, division, pep, currency, km_distance,km_value, incoming_value, expenses, id_employee, status):
         
         self.employee = employee
         self.company = company
         self.installment_num = installment_num
         self.description = description
-        self.date = date
+        self.date_request = date_request
         self.refund_type = refund_type
         self.cost_center = cost_center
         self.intern_order = intern_order
@@ -54,7 +55,7 @@ class Refund(db.Model):
             "company": self.company,
             "installment_num": self.installment_num,
             "description": self.description,
-            "date": self.date,
+            "date_request": self.date_request,
             "refund_type": self.refund_type,
             "cost_center": self.cost_center,  
             "intern_order": self.intern_order, 
