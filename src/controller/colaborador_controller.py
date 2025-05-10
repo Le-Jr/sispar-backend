@@ -83,30 +83,37 @@ def login():
 
 
 
-@bp_employee.route('/atualizar/<int:id_employee>', methods=['PUT'])
-def update_employe_data(id_employee):
+@bp_employee.route('/atualizar/<int:id>', methods=['PUT'])
+@swag_from("../docs/colaborador/atualizar_colaborador.yml")
+def update_employee_data(id):
     requisition_data = request.get_json()
 
-    employee_encontrado = None
-    for employee in data:
-        if employee['id'] == id_employee:
-            employee_encontrado = employee
-            break
+    if not requisition_data:
+        return jsonify({"erro": "Dados da requisição estão vazios"}), 400
 
-    if not employee_encontrado:
-        return jsonify({"mensagem": "Usuario não encontrado"}), 404
+    employee = Employee.query.get(id)
 
-    # Verifica duplicação de crachá, se ele for alterado
-    if 'badge' in requisition_data:
-        novo_badge = requisition_data['badge']
-        for employee in data:
-            if employee['badge'] == novo_badge and employee['id'] != id_employee:
-                return jsonify({"Erro": "Crachá já existe"}), 400
-        employee_encontrado['badge'] = novo_badge
+    if not employee:
+        return jsonify({"mensagem": "Usuário não encontrado"}), 404
+
+    # if 'badge' in requisition_data:
+    #     novo_badge = requisition_data['badge']
+    #     badge_exists = Employee.query.filter(Employee.badge == novo_badge, Employee.id != id).first()
+    #     if badge_exists:
+    #         return jsonify({"erro": "Crachá já existe"}), 400
+    #     employee.badge = novo_badge
 
     if 'name' in requisition_data:
-        employee_encontrado['name'] = requisition_data['name']
+        employee.name = requisition_data['name']
     if 'job' in requisition_data:
-        employee_encontrado['job'] = requisition_data['job']
+        employee.job = requisition_data['job']
+    if 'email' in requisition_data:
+        employee.email = requisition_data['email']
+    if 'salary' in requisition_data:
+        employee.salary = requisition_data['salary']
+    if 'password' in requisition_data:
+        employee.password = hash_password(requisition_data['password'])
+
+    db.session.commit()
 
     return jsonify({'mensagem': 'Dados do colaborador atualizados com sucesso'}), 200
