@@ -1,0 +1,86 @@
+tags:
+  - Reembolso
+description: Endpoint para solicitar um novo reembolso
+
+parameters:
+  - in: body
+    name: corpo
+    required: true
+    schema:
+      type: object
+      properties:
+        employee:
+          type: string
+          example: João da Silva
+        company:
+          type: string
+          example: Empresa X
+        installment_num:
+          type: integer
+          example: 101
+        description:
+          type: string
+          example: Viagem para reunião externa
+        date_request:
+          type: string
+          format: date
+          example: "2025-05-10"
+        refund_type:
+          type: string
+          example: Transporte
+        cost_center:
+          type: string
+          example: CC1234
+        intern_order:
+          type: string
+          example: IO5678
+        division:
+          type: string
+          example: Comercial
+        pep:
+          type: string
+          example: PEP001
+        currency:
+          type: string
+          example: BRL
+        km_distance:
+          type: number
+          example: 120.5
+        km_value:
+          type: number
+          example: 0.75
+        incoming_value:
+          type: number
+          example: 90.0
+        expenses:
+          type: number
+          example: 150.0
+        id_employee:
+          type: integer
+          example: 5
+        status:
+          type: string
+          example: Pendente
+      required:
+        - employee
+        - company
+        - installment_num
+        - description
+        - date_request
+        - refund_type
+        - cost_center
+        - intern_order
+        - division
+        - pep
+        - currency
+        - km_distance
+        - km_value
+        - incoming_value
+        - expenses
+        - id_employee
+        - status
+responses:
+  201:
+    description: Solicitação de reembolso feita com sucesso
+  400:
+    description: Insira todos os dados

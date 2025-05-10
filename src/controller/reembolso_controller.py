@@ -1,14 +1,15 @@
 from flask import Blueprint, jsonify, request
 from src.model.reembolso_model import Refund
 from src.model import db
+from flasgger import swag_from
 
 bp_refund = Blueprint("reembolso", __name__, url_prefix="/reembolso")
 
-def initial():
-    return jsonify({"message": "Hello world!"})
+
 
 
 @bp_refund.route("/solicita-reembolso", methods = ["POST"])
+@swag_from("../docs/reembolso/solicita_reembolso.yml")
 def refund():
     requisition_data = request.get_json()
     
@@ -42,6 +43,7 @@ def refund():
     return jsonify({"message": "Solicitação reembolso feita com sucesso"}),201
 
 @bp_refund.route("ver-reembolso/<int:installment_num>", methods = ["GET"])
+@swag_from("../docs/reembolso/ver_reembolso.yml")
 def refund_view(installment_num):
     
     
