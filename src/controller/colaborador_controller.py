@@ -58,8 +58,8 @@ def create_employee():
 def login():
     
     requisition_data = request.get_json()
-    email = requisition_data['email']
-    password = requisition_data['password']
+    email = requisition_data.get('email')
+    password = requisition_data.get('password')
     
     if not email or not password:
         return jsonify({"message": "preencha todos os campos de login"}), 400
@@ -71,8 +71,10 @@ def login():
     
     employee = employee.to_dict()
     
-    if employee.get('email') == email and check_password(password, employee.get('password')):
+    if check_password(password, employee.get('password')):
         return jsonify({"message":  "Login realizado com sucesso"}), 200
+    else:
+        return jsonify({"message": "Senha incorreta"}),401
 
 
 
