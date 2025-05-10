@@ -1,37 +1,40 @@
 tags:
   - Colaborador
-description: Endpoint para pegar os colaboradores cadastrados
+summary: Lista todos os colaboradores
+description: Endpoint para retornar a lista de colaboradores cadastrados.
 
-parameters:
-  - in: body
-    name: corpo # Referencia ao body da requisicao
-    required: true
-    schema:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Linus Torvalds
-        email:
-          type: string
-          example: linus@linux.com
-        password:
-          type: string
-          example: 12345
-        job:
-          type: string
-          example: Dev Front-end
-        salary:
-          type: number
-          example: 2500.78
-      required:
-        - name
-        - email
-        - password
-        - job
-        - salary
 responses:
   200:
-    description: Sucesso na requisição
+    description: Lista de colaboradores retornada com sucesso.
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              name:
+                type: string
+                example: Linus Torvalds
+              email:
+                type: string
+                example: linus@linux.com
+              job:
+                type: string
+                example: Dev Front-end
+              salary:
+                type: number
+                example: 2500.78
   404:
-    description: Sem colaboradores na lista
+    description: Sem colaboradores na lista.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: Sem colaboradores na lista

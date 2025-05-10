@@ -58,6 +58,7 @@ def create_employee():
 
 
 @bp_employee.route('login', methods = ["POST"])
+@swag_from("../docs/colaborador/login_colaborador.yml")
 def login():
     
     requisition_data = request.get_json()
