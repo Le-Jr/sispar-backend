@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from src.security.security import check_password, hash_password
 from src.model.colaborador_model import Employee
 from src.model import db
+from flasgger import swag_from
 
 
 bp_employee = Blueprint('colaborador', __name__, url_prefix='/colaborador')
@@ -9,6 +10,7 @@ bp_employee = Blueprint('colaborador', __name__, url_prefix='/colaborador')
 data = "" 
 
 @bp_employee.route('todos-colaboradores', methods = ["GET"])
+@swag_from("../docs/colaborador/pegar_colaboradores.yml")
 def get_data():
     employees = db.session.execute(
         db.select(Employee)
@@ -16,10 +18,15 @@ def get_data():
     
     employees = [employee.all_data() for employee in employees]
     
+    if not employees:
+        return jsonify({"message": "Sem colaboradores na lista"}),404
+    
+    
     return jsonify(employees), 200
 
 
 @bp_employee.route('/criar', methods=["POST"])
+@swag_from('../docs/colaborador/cadastrar_colaborador.yml')
 def create_employee():
     requisition_data = request.get_json()
     password = hash_password(requisition_data['password'])

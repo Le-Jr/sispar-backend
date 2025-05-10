@@ -3,9 +3,7 @@ from src.model.reembolso_model import Refund
 from src.model import db
 
 bp_refund = Blueprint("reembolso", __name__, url_prefix="/reembolso")
-data = ""
 
-@bp_refund.route("/teste")
 def initial():
     return jsonify({"message": "Hello world!"})
 

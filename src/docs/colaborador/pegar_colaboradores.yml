@@ -1,0 +1,37 @@
+tags:
+  - Colaborador
+description: Endpoint para pegar os colaboradores cadastrados
+
+parameters:
+  - in: body
+    name: corpo # Referencia ao body da requisicao
+    required: true
+    schema:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Linus Torvalds
+        email:
+          type: string
+          example: linus@linux.com
+        password:
+          type: string
+          example: 12345
+        job:
+          type: string
+          example: Dev Front-end
+        salary:
+          type: number
+          example: 2500.78
+      required:
+        - name
+        - email
+        - password
+        - job
+        - salary
+responses:
+  200:
+    description: Sucesso na requisição
+  404:
+    description: Sem colaboradores na lista
