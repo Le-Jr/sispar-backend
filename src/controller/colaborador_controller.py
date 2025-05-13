@@ -3,6 +3,7 @@ from src.security.security import check_password, hash_password
 from src.model.colaborador_model import Employee
 from src.model import db
 from flasgger import swag_from
+from sqlalchemy.exc import IntegrityError
 
 
 bp_employee = Blueprint('colaborador', __name__, url_prefix='/colaborador')
@@ -115,5 +116,32 @@ def update_employee_data(id):
         employee.password = hash_password(requisition_data['password'])
 
     db.session.commit()
+    return jsonify({'mensagem': f"Colaborador número {id} atualizado com sucesos"}), 200
+ 
+    
 
-    return jsonify({'mensagem': 'Dados do colaborador atualizados com sucesso'}), 200
+
+@bp_employee.route('/apagar/<int:id>', methods=['DELETE'])
+@swag_from("../docs/colaborador/deletar_colaborador.yml")
+def erase_employee(id):
+    try:
+        employee = Employee.query.get(id)
+
+        if not employee:
+            return jsonify({"mensagem": "Usuário não encontrado"}), 404
+
+        db.session.delete(employee)
+        db.session.commit()
+        return jsonify({'mensagem': 'Deletado com Sucesso'}), 200
+
+    except IntegrityError as e:
+        db.session.rollback()
+        if "foreign key constraint fails" in str(e.orig):
+            return jsonify({
+                'erro': 'Não é possível deletar esse funcionário. Existem registros relacionados a ele.'
+            }), 409
+        return jsonify({'erro': str(e)}), 500
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'erro': str(e)}), 500

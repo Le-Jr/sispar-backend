@@ -1,0 +1,18 @@
+tags:
+  - Colaborador
+description: Endpoint para deletar os dados de um colaborador existente
+
+parameters:
+  - name: id
+    in: path
+    type: integer
+    required: true
+    description: ID do colaborador a ser deletado
+
+responses:
+  200:
+    description: Dados do colaborador deletados com sucesso
+  404:
+    description: Usuário não encontrado
+  409:
+    description: Não é possível deletar esse funcionário. Existem registros relacionados a ele
