@@ -122,6 +122,7 @@ def update_employee_data(id):
 
 
 @bp_employee.route('/apagar/<int:id>', methods=['DELETE'])
+@swag_from("../docs/colaborador/deletar_colaborador.yml")
 def erase_employee(id):
     try:
         employee = Employee.query.get(id)
