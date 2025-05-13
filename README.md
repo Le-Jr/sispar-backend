@@ -1,6 +1,6 @@
 # Backend - Sispar
 
-![Screenshot](./assets/swagger.png)
+![Screenshot](./assets/print.png)
 
 ## Descrição
 
