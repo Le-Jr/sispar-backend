@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from src.model.reembolso_model import Refund
 from src.model import db
 from flasgger import swag_from
+from sqlalchemy.exc import IntegrityError
 
 bp_refund = Blueprint("reembolso", __name__, url_prefix="/reembolso")
 
@@ -56,4 +57,45 @@ def refund_view(installment_num):
   
     
     return jsonify(refund.to_dict()), 200
-    
+
+
+@bp_refund.route("/atualiza-reembolso/<int:id>", methods=["PUT"])
+@swag_from("../docs/reembolso/atualiza_reembolso.yml") 
+def update_refund(id):
+    refund = Refund.query.get(id)
+    if not refund:
+        return jsonify({"mensagem": "Reembolso não encontrado"}), 404
+
+    data = request.get_json()
+    if not data:
+        return jsonify({"mensagem": "Nenhum dado recebido"}), 400
+
+    # Atualiza os campos se existirem no JSON
+    for key in data:
+        if hasattr(refund, key):
+            setattr(refund, key, data[key])
+
+    db.session.commit()
+    return jsonify({"mensagem": "Reembolso atualizado com sucesso"}), 200
+ 
+ 
+
+@bp_refund.route("/apagar-reembolso/<int:id>", methods=["DELETE"])
+@swag_from("../docs/reembolso/apagar_reembolso.yml")  
+def delete_refund(id):
+    refund = Refund.query.get(id)
+    if not refund:
+        return jsonify({"mensagem": "Reembolso não encontrado"}), 404
+
+    try:
+        db.session.delete(refund)
+        db.session.commit()
+        return jsonify({"mensagem": "Reembolso deletado com sucesso"}), 200
+
+    except IntegrityError as e:
+        db.session.rollback()
+        return jsonify({"erro": "Não foi possível deletar. Verifique dependências."}), 409
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"erro": str(e)}), 500
