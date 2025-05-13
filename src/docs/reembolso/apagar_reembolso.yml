@@ -1,0 +1,20 @@
+tags:
+  - Reembolso
+description: Endpoint para deletar um reembolso existente
+
+parameters:
+  - name: id
+    in: path
+    type: integer
+    required: true
+    description: ID do reembolso a ser deletado
+
+responses:
+  200:
+    description: Reembolso deletado com sucesso
+  404:
+    description: Reembolso não encontrado
+  409:
+    description: Não foi possível deletar devido a restrições de integridade
+  500:
+    description: Erro interno ao tentar deletar o reembolso

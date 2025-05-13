@@ -1,0 +1,76 @@
+tags:
+  - Reembolso
+description: Endpoint para atualizar os dados de um reembolso existente
+
+parameters:
+  - name: installment_num
+    in: path
+    type: integer
+    required: true
+    description: Número da prestação do reembolso a ser atualizado
+  - in: body
+    name: corpo
+    required: true
+    schema:
+      type: object
+      properties:
+        employee:
+          type: string
+          example: João da Silva
+        company:
+          type: string
+          example: ACME Corp
+        installment_num:
+          type: integer
+          example: 3
+        description:
+          type: string
+          example: Reembolso de viagem a trabalho
+        date_request:
+          type: string
+          format: date
+          example: "2025-05-10"
+        refund_type:
+          type: string
+          example: Viagem
+        cost_center:
+          type: string
+          example: CC-001
+        intern_order:
+          type: string
+          example: IO-002
+        division:
+          type: string
+          example: TI
+        pep:
+          type: string
+          example: PEP-XYZ
+        currency:
+          type: string
+          example: BRL
+        km_distance:
+          type: string
+          example: 120
+        km_value:
+          type: number
+          example: 2.5
+        incoming_value:
+          type: number
+          example: 300.00
+        expenses:
+          type: number
+          example: 50.00
+        id_employee:
+          type: integer
+          example: 1
+        status:
+          type: string
+          example: Aprovado
+
+responses:
+  200:
+    description: Reembolso atualizado com sucesso
+  400:
+    description: Erro de validação nos dados enviados
+  404:
+    description: Reembolso não encontrado

@@ -59,10 +59,10 @@ def refund_view(installment_num):
     return jsonify(refund.to_dict()), 200
 
 
-@bp_refund.route("/atualiza-reembolso/<int:id>", methods=["PUT"])
-@swag_from("../docs/reembolso/atualiza_reembolso.yml") 
-def update_refund(id):
-    refund = Refund.query.get(id)
+@bp_refund.route("/atualiza-reembolso/<int:installment_num>", methods=["PUT"])
+@swag_from("../docs/reembolso/atualizar_reembolso.yml") 
+def update_refund(installment_num):
+    refund = db.session.execute(db.select(Refund).where(Refund.installment_num == installment_num)).scalar()
     if not refund:
         return jsonify({"mensagem": "Reembolso não encontrado"}), 404
 
